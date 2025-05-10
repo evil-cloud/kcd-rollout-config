@@ -53,8 +53,6 @@ spec:
       {{- with .Values.restartPolicy }}
       restartPolicy: {{ . }}
       {{- end }}
-      priorityClassName: {{ include "generic-rollout.fullname" . }}-critical
-
       containers:
         - name: {{ include "generic-rollout.fullname" . }}
           {{- with .Values.securityContext }}

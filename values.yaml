@@ -1,6 +1,6 @@
 # --- Base manifest values ---
-nameOverride: "application"
-fullnameOverride: "application"
+nameOverride: "devops-api"
+fullnameOverride: "devops-api"
 autoscaling:
   minReplicas: 10
   maxReplicas: 20
@@ -134,13 +134,6 @@ podDisruptionBudget:
   enabled: true
   minAvailable: "50%"
   unhealthyPodEvictionPolicy: AlwaysAllow
-priorityClass:
-  enabled: false
-  value: 1000000
-  globalDefault: false
-  preemptionPolicy: PreemptLowerPriority
-  annotations:
-    security.kubernetes.io/critical-pod: "true"
 # --- Service Monitor Configuration ---
 serviceMonitor:
   namespace: monitoring
