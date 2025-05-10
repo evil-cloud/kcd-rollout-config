@@ -164,17 +164,17 @@ istio:
         name: http
         protocol: HTTP
       hosts:
-      - "devops.infraops.us"
+      - "devops2.infraops.us"
     labels: {}
     annotations:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      external-dns.alpha.kubernetes.io/hostname: "devops.infraops.us"
+      external-dns.alpha.kubernetes.io/hostname: "devops2.infraops.us"
       external-dns.alpha.kubernetes.io/target: c903dcc9-5c64-4d5c-88e1-ee8632ef4ac0.cfargotunnel.com
       kubernetes.io/ingress.class: "istio"
   virtualService:
     enabled: true
     hosts:
-    - "devops.infraops.us"
+    - "devops2.infraops.us"
     http:
     - name: primary
       match:
@@ -201,7 +201,7 @@ istio:
           fixedDelay: 5s
       corsPolicy:
         allowOrigins:
-        - exact: "https://devops.infraops.us"
+        - exact: "https://devops2.infraops.us"
         allowMethods:
         - GET
         allowHeaders:
