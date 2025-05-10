@@ -229,16 +229,8 @@ istio:
     subsets:
       stable:
         name: stable
-        loadBalancer:
-          simple: LEAST_CONN
-        tls:
-          mode: ISTIO_MUTUAL
       canary:
         name: canary
-        loadBalancer:
-          simple: LEAST_CONN
-        tls:
-          mode: ISTIO_MUTUAL
   sidecar:
     enabled: true
     name: default
