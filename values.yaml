@@ -16,7 +16,7 @@ image:
   pullPolicy: IfNotPresent
   # tag: "4bf1a035"
   # tag: "ae21d1ce"
-  tag: "ee1ffd3a"
+  tag: "latest"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
@@ -57,16 +57,16 @@ service:
   publishNotReadyAddresses: false
   ipFamilyPolicy: SingleStack
   ipFamilies:
-    - IPv4
+  - IPv4
 env:
-  - name: PYTHONUNBUFFERED
-    value: "1"
-  - name: HOME
-    value: "/tmp"
-  - name: PYTHONDONTWRITEBYTECODE
-    value: "1"
-  - name: TMPDIR
-    value: "/tmp"
+- name: PYTHONUNBUFFERED
+  value: "1"
+- name: HOME
+  value: "/tmp"
+- name: PYTHONDONTWRITEBYTECODE
+  value: "1"
+- name: TMPDIR
+  value: "/tmp"
 resources:
   limits:
     cpu: "200m"
@@ -115,21 +115,21 @@ dnsConfig:
   - name: ndots
     value: "5"
 volumes:
-  - name: tmp
-    emptyDir:
-      medium: Memory
-      sizeLimit: 64Mi
-  - name: cache
-    emptyDir:
-      medium: Memory
-      sizeLimit: 128Mi
+- name: tmp
+  emptyDir:
+    medium: Memory
+    sizeLimit: 64Mi
+- name: cache
+  emptyDir:
+    medium: Memory
+    sizeLimit: 128Mi
 volumeMounts:
-  - name: tmp
-    mountPath: /tmp
-    readOnly: false
-  - name: cache
-    mountPath: /var/cache
-    readOnly: false
+- name: tmp
+  mountPath: /tmp
+  readOnly: false
+- name: cache
+  mountPath: /var/cache
+  readOnly: false
 podDisruptionBudget:
   enabled: true
   minAvailable: "50%"
@@ -149,10 +149,10 @@ serviceMonitor:
   labels:
     release: prom
   endpoints:
-    - port: http
-      path: /metrics
-      interval: 15s 
-      scrapeTimeout: 10s 
+  - port: http
+    path: /metrics
+    interval: 15s
+    scrapeTimeout: 10s
 # --- Istio Configuration ---
 istio:
   gateway:
@@ -161,12 +161,12 @@ istio:
     selector:
       istio: gateway
     servers:
-      - port:
-          number: 80
-          name: http
-          protocol: HTTP
-        hosts:
-          - "application.infraops.us"
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+      - "application.infraops.us"
     labels: {}
     annotations:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
@@ -176,46 +176,46 @@ istio:
   virtualService:
     enabled: true
     hosts:
-      - "application.infraops.us"
+    - "application.infraops.us"
     http:
-      - name: primary
-        match:
-          - uri:
-              prefix: "/"
-        route:
-          - destination:
-              subset: stable
-              port:
-                number: 80
-          - destination:
-              subset: canary
-              port:
-                number: 80
-        retries:
-          attempts: 3
-          perTryTimeout: 2s
-          retryOn: "gateway-error,connect-failure,refused-stream"
-        timeout: 5s
-        fault:
-          delay:
-            percentage:
-              value: 0.1
-            fixedDelay: 5s
-        corsPolicy:
-          allowOrigins:
-            - exact: "https://application.infraops.us"
-          allowMethods:
-            - GET
-          allowHeaders:
-            - authorization
-            - content-type
-          maxAge: "24h"
-        headers:
-          response:
-            set:
-              strict-transport-security: "max-age=31536000; includeSubDomains"
-              x-content-type-options: "nosniff"
-              x-frame-options: "DENY"
+    - name: primary
+      match:
+      - uri:
+          prefix: "/"
+      route:
+      - destination:
+          subset: stable
+          port:
+            number: 80
+      - destination:
+          subset: canary
+          port:
+            number: 80
+      retries:
+        attempts: 3
+        perTryTimeout: 2s
+        retryOn: "gateway-error,connect-failure,refused-stream"
+      timeout: 5s
+      fault:
+        delay:
+          percentage:
+            value: 0.1
+          fixedDelay: 5s
+      corsPolicy:
+        allowOrigins:
+        - exact: "https://application.infraops.us"
+        allowMethods:
+        - GET
+        allowHeaders:
+        - authorization
+        - content-type
+        maxAge: "24h"
+      headers:
+        response:
+          set:
+            strict-transport-security: "max-age=31536000; includeSubDomains"
+            x-content-type-options: "nosniff"
+            x-frame-options: "DENY"
   destinationRule:
     enabled: true
     trafficPolicy:
@@ -245,9 +245,9 @@ istio:
     enabled: true
     name: default
     egress:
-      - hosts: 
-          - "./*"
-          - "istio-system/*"
+    - hosts:
+      - "./*"
+      - "istio-system/*"
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY
   peerAuthentication:
@@ -261,11 +261,11 @@ istio:
       enabled: true
       name: jsonplaceholder.typicode.com
       hosts:
-        - "jsonplaceholder.typicode.com"
+      - "jsonplaceholder.typicode.com"
       ports:
-        - number: 443
-          name: https
-          protocol: HTTPS
+      - number: 443
+        name: https
+        protocol: HTTPS
       resolution: DNS
       location: MESH_EXTERNAL
       destinationRule:
@@ -293,8 +293,8 @@ rollout:
     - analysis:
         templates:
         - templateName: general-success-rate
-        - templateName: external-api-success-rate 
-        args: 
+        - templateName: external-api-success-rate
+        args:
         - name: rollout-pod-hash
           valueFrom:
             podTemplateHashValue: Latest
@@ -335,5 +335,5 @@ rollout:
         args:
         - name: rollout-pod-hash
           valueFrom:
-            podTemplateHashValue: Latest           
+            podTemplateHashValue: Latest
     - setWeight: 100
