@@ -135,7 +135,7 @@ podDisruptionBudget:
   minAvailable: "50%"
   unhealthyPodEvictionPolicy: AlwaysAllow
 priorityClass:
-  enabled: true
+  enabled: false
   value: 1000000
   globalDefault: false
   preemptionPolicy: PreemptLowerPriority

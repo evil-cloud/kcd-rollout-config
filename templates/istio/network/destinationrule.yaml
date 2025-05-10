@@ -29,4 +29,4 @@ spec:
         {{- toYaml . | nindent 12 }}
       {{- end }}
     {{- end }}
-{{- end }}
+{{- end }
