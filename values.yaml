@@ -1,9 +1,9 @@
 # --- Base manifest values ---
-nameOverride: "gitops-api-v3"
-fullnameOverride: "gitops-api-v3"
+nameOverride: "rollout-api"
+fullnameOverride: "rollout-api"
 autoscaling:
-  minReplicas: 3
-  maxReplicas: 10
+  minReplicas: 10
+  maxReplicas: 20
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 serviceAccount:
@@ -15,8 +15,8 @@ image:
   repository: d4rkghost47/gitops-api
   pullPolicy: IfNotPresent
   # tag: "4bf1a035"
-  # tag: "ae21d1ce"
-  tag: "ee1ffd3a"
+  tag: "ae21d1ce"
+  # tag: "ee1ffd3a"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
@@ -166,17 +166,17 @@ istio:
           name: http
           protocol: HTTP
         hosts:
-          - "apiv5.infraops.us"
+          - "apiv2.infraops.us"
     labels: {}
     annotations:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      external-dns.alpha.kubernetes.io/hostname: "apiv5.infraops.us"
+      external-dns.alpha.kubernetes.io/hostname: "apiv2.infraops.us"
       external-dns.alpha.kubernetes.io/target: c903dcc9-5c64-4d5c-88e1-ee8632ef4ac0.cfargotunnel.com
       kubernetes.io/ingress.class: "istio"
   virtualService:
     enabled: true
     hosts:
-      - "apiv5.infraops.us"
+      - "apiv2.infraops.us"
     http:
       - name: primary
         match:
@@ -203,7 +203,7 @@ istio:
             fixedDelay: 5s
         corsPolicy:
           allowOrigins:
-            - exact: "https://apiv5.infraops.us"
+            - exact: "https://apiv2.infraops.us"
           allowMethods:
             - GET
           allowHeaders:
@@ -277,6 +277,63 @@ istio:
             mode: DISABLE
           loadBalancer:
             simple: ROUND_ROBIN
-### - Argo Rollouts Configuration ---
+# - Argo Rollouts Configuration ---
 rollout:
-  steps:
+  analysisTemplate:
+    prometheus:
+      address: "http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+  spec:
+    steps:
+    - analysis:
+        templates:
+        - templateName: check-jsonplaceholder-api-rate
+    - setWeight: 10
+    - pause:
+        duration: 40s
+    - analysis:
+        templates:
+        - templateName: general-success-rate
+        - templateName: external-api-success-rate 
+        args: 
+        - name: rollout-pod-hash
+          valueFrom:
+            podTemplateHashValue: Latest
+    - setWeight: 25
+    - pause:
+        duration: 40s
+    - analysis:
+        templates:
+        - templateName: general-success-rate
+        - templateName: external-api-success-rate
+        - templateName: external-api-latency-p95
+        args:
+        - name: rollout-pod-hash
+          valueFrom:
+            podTemplateHashValue: Latest
+    - setWeight: 50
+    - pause:
+        duration: 40s
+    - analysis:
+        templates:
+        - templateName: general-success-rate
+        - templateName: external-api-success-rate
+        - templateName: external-api-latency-p95
+        - templateName: circuit-breaker-state
+        args:
+        - name: rollout-pod-hash
+          valueFrom:
+            podTemplateHashValue: Latest
+    - setWeight: 75
+    - pause:
+        duration: 40s
+    - analysis:
+        templates:
+        - templateName: general-success-rate
+        - templateName: external-api-success-rate
+        - templateName: external-api-latency-p95
+        - templateName: circuit-breaker-state
+        args:
+        - name: rollout-pod-hash
+          valueFrom:
+            podTemplateHashValue: Latest           
+    - setWeight: 100

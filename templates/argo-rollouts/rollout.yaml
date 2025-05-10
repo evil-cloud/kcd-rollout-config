@@ -55,17 +55,7 @@ spec:
             canarySubsetName: {{ .Values.istio.destinationRule.subsets.canary.name }}
             stableSubsetName: {{ .Values.istio.destinationRule.subsets.stable.name }}
 
+      {{ with .Values.rollout.spec.steps }}
       steps:
-      - setWeight: 10
-      - pause:
-          duration: 30s
-      - setWeight: 25
-      - pause:
-          duration: 30s
-      - setWeight: 50
-      - pause:
-          duration: 30s
-      - setWeight: 75
-      - pause:
-          duration: 30s
-      - setWeight: 100
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
