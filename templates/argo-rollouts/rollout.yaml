@@ -47,11 +47,13 @@ spec:
           virtualService:
             name: {{ include "generic-rollout.fullname" . }}-vsvc
             routes:
-            - primary
+            {{- range .Values.istio.virtualService.http }}
+            - {{ .name }}
+            {{- end }}
           destinationRule:
             name: {{ include "generic-rollout.fullname" . }}-dr
-            canarySubsetName: canary
-            stableSubsetName: stable
+            canarySubsetName: {{ .Values.istio.destinationRule.subsets.canary.name }}
+            stableSubsetName: {{ .Values.istio.destinationRule.subsets.stable.name }}
 
       steps:
       - setWeight: 10
