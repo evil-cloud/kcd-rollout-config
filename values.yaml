@@ -1,6 +1,6 @@
 # --- Base manifest values ---
-nameOverride: "rollout-api"
-fullnameOverride: "rollout-api"
+nameOverride: "application"
+fullnameOverride: "application"
 autoscaling:
   minReplicas: 10
   maxReplicas: 20
@@ -15,8 +15,8 @@ image:
   repository: d4rkghost47/gitops-api
   pullPolicy: IfNotPresent
   # tag: "4bf1a035"
-  tag: "ae21d1ce"
-  # tag: "ee1ffd3a"
+  # tag: "ae21d1ce"
+  tag: "ee1ffd3a"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
@@ -166,17 +166,17 @@ istio:
           name: http
           protocol: HTTP
         hosts:
-          - "apiv2.infraops.us"
+          - "application.infraops.us"
     labels: {}
     annotations:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      external-dns.alpha.kubernetes.io/hostname: "apiv2.infraops.us"
+      external-dns.alpha.kubernetes.io/hostname: "application.infraops.us"
       external-dns.alpha.kubernetes.io/target: c903dcc9-5c64-4d5c-88e1-ee8632ef4ac0.cfargotunnel.com
       kubernetes.io/ingress.class: "istio"
   virtualService:
     enabled: true
     hosts:
-      - "apiv2.infraops.us"
+      - "application.infraops.us"
     http:
       - name: primary
         match:
@@ -203,7 +203,7 @@ istio:
             fixedDelay: 5s
         corsPolicy:
           allowOrigins:
-            - exact: "https://apiv2.infraops.us"
+            - exact: "https://application.infraops.us"
           allowMethods:
             - GET
           allowHeaders:
@@ -243,7 +243,7 @@ istio:
           mode: ISTIO_MUTUAL
   sidecar:
     enabled: true
-    name: default-v2
+    name: default
     egress:
       - hosts: 
           - "./*"
@@ -252,7 +252,7 @@ istio:
       mode: REGISTRY_ONLY
   peerAuthentication:
     enabled: true
-    name: default-v2
+    name: default
     mtls:
       mode: PERMISSIVE
   externalServices:

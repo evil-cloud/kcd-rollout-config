@@ -2,7 +2,6 @@
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
-  # Lee el nombre directamente de values.yaml
   name: {{ .Values.istio.peerAuthentication.name }}
   namespace: {{ .Release.Namespace }}
   labels:
@@ -11,11 +10,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  # WorkloadSelector para apuntar a los pods de la aplicación
   workloadSelector:
     labels:
       {{- include "generic-rollout.selectorLabels" . | nindent 6 }}
-  # Lee la configuración de mtls directamente de values.yaml
   mtls:
     {{- toYaml .Values.istio.peerAuthentication.mtls | nindent 4 }}
 {{- end }}

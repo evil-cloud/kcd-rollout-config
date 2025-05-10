@@ -7,30 +7,26 @@ metadata:
     {{- include "generic-rollout.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
-  # Add session affinity
   {{- with .Values.service.sessionAffinity }}
   sessionAffinity: {{ . }}
   {{- end }}
-  # Add publish not ready addresses
   {{- with .Values.service.publishNotReadyAddresses }}
   publishNotReadyAddresses: {{ . }}
   {{- end }}
-  # Add ip family policy
   {{- with .Values.service.ipFamilyPolicy }}
   ipFamilyPolicy: {{ . }}
   {{- end }}
-  # Add ip families
   {{- with .Values.service.ipFamilies }}
   ipFamilies:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   ports:
-    - port: {{ .Values.service.port }} # Service listens on this port (80)
-      targetPort: {{ .Values.service.containerPortName }} # Forwards to the container port *name* (http)
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.containerPortName }}
       protocol: TCP
-      name: {{ .Values.service.containerPortName }} # Use the container port name for consistency
+      name: {{ .Values.service.containerPortName }}
       {{- with .Values.service.appProtocol }}
-      appProtocol: {{ . }} # Add app protocol
+      appProtocol: {{ . }}
       {{- end }}
   selector:
     {{- include "generic-rollout.selectorLabels" . | nindent 4 }}

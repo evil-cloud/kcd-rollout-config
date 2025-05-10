@@ -12,31 +12,21 @@ metadata:
 spec:
   host: {{ include "generic-rollout.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
   trafficPolicy:
-    # Este trafficPolicy es para todo el DestinationRule, no para subsets individuales.
-    # Solo lo incluimos si hay configuración aquí en values.yaml
     {{- with .Values.istio.destinationRule.trafficPolicy }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   subsets:
     {{- range $subsetName, $subsetConfig := .Values.istio.destinationRule.subsets }}
-    - name: {{ $subsetConfig.name }} # Usamos el campo 'name' de values.yaml
+    - name: {{ $subsetConfig.name }}
       labels:
-        {{- include "generic-rollout.selectorLabels" $ | nindent 8 }} # Output de labels, indentado correctamente bajo labels:
-      # === CORRECCIÓN: Listamos explícitamente los campos del subset al nivel correcto ===
+        {{- include "generic-rollout.selectorLabels" $ | nindent 8 }}
       {{- with $subsetConfig.loadBalancer }}
-      loadBalancer: # Campo loadBalancer al mismo nivel que labels:
-        {{- toYaml . | nindent 12 }} # Indentamos el contenido de loadBalancer
+      loadBalancer:
+        {{- toYaml . | nindent 12 }}
       {{- end }}
       {{- with $subsetConfig.tls }}
-      tls: # Campo tls al mismo nivel que labels: y loadBalancer:
-        {{- toYaml . | nindent 12 }} # Indentamos el contenido de tls
+      tls:
+        {{- toYaml . | nindent 12 }}
       {{- end }}
-      # Si tienes otros campos específicos de subset en values.yaml (como connectionPool, portLevelSettings)
-      # debes añadirlos aquí de forma similar:
-      # {{- with $subsetConfig.connectionPool }}
-      # connectionPool:
-      #   {{- toYaml . | nindent 12 }}
-      # {{- end }}
-      # =======================================================================
     {{- end }}
 {{- end }}
