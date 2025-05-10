@@ -16,7 +16,7 @@ image:
   pullPolicy: IfNotPresent
   # tag: "4bf1a035"
   # tag: "ae21d1ce"
-  tag: "f44c8221"
+  tag: "afe77645"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
