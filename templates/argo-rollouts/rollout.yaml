@@ -22,25 +22,25 @@ spec:
     canary:
       canaryMetadata:
         annotations:
-          role: "{{ .Values.image.tag }}"
-          version: "{{ .Values.image.tag }}"
+          role: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag }}
         labels:
-          service.istio.io/canonical-revision: "{{ .Values.image.tag }}"
-          service.istio.io/canonical-name: "{{ .Values.image.tag }}"
-          app.kubernetes.io/version: "{{ .Values.image.tag }}"
-          version: "{{ .Values.image.tag }}"
-          role: "{{ .Values.image.tag }}"
+          service.istio.io/canonical-revision: {{ .Values.image.tag }}
+          service.istio.io/canonical-name: {{ .Values.image.tag }}
+          app.kubernetes.io/version: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag }}
+          role: {{ .Values.image.tag }}
 
       stableMetadata:
         annotations:
-          role: "{{ .Values.image.tag }}"
-          version: "{{ .Values.image.tag }}"
+          role: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag }}
         labels:
-          service.istio.io/canonical-revision: "{{ .Values.image.tag }}"
-          service.istio.io/canonical-name: "{{ .Values.image.tag }}"
-          app.kubernetes.io/version: "{{ .Values.image.tag }}"
-          version: "{{ .Values.image.tag }}"
-          role: "{{ .Values.image.tag }}"
+          service.istio.io/canonical-revision: {{ .Values.image.tag }}
+          service.istio.io/canonical-name: {{ .Values.image.tag }}
+          app.kubernetes.io/version: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag }}
+          role: {{ .Values.image.tag }}
 
       trafficRouting:
         istio:
