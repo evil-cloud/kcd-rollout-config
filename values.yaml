@@ -144,8 +144,6 @@ priorityClass:
 # --- Service Monitor Configuration ---
 serviceMonitor:
   namespace: monitoring
-  interval: 15s
-  scrapeTimeout: 10s
   labels:
     release: prom
   endpoints:
