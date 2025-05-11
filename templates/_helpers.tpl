@@ -37,7 +37,6 @@ Common labels
 helm.sh/chart: {{ include "generic-rollout.chart" . }}
 {{ include "generic-rollout.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app: {{ include "generic-rollout.fullname" . }}
