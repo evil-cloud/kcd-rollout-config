@@ -15,7 +15,7 @@ image:
   repository: d4rkghost47/gitops-api
   pullPolicy: IfNotPresent
   # tag: "d1d61c3f"
-  tag: "540e4499"
+  tag: "364b7bf6"
   # tag: "d1d61c3f"
 imagePullSecrets: []
 podAnnotations:
