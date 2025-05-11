@@ -25,13 +25,13 @@ spec:
           role: canary
         labels:
           role: canary
-          version: canary
+          version: {{ .Values.image.tag }}
       stableMetadata:
         annotations:
           role: stable
         labels:
           role: stable
-          version: stable
+          version: {{ .Values.image.tag }}
       trafficRouting:
         istio:
           virtualService:
