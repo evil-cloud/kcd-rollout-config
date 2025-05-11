@@ -25,11 +25,13 @@ spec:
           role: canary
         labels:
           role: canary
+          version: canary
       stableMetadata:
         annotations:
           role: stable
         labels:
           role: stable
+          version: stable
       trafficRouting:
         istio:
           virtualService:
