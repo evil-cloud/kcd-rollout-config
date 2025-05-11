@@ -20,6 +20,12 @@ spec:
 
   strategy:
     canary:
+      stableMetadata:
+        labels:
+          role: stable
+      canaryMetadata:
+        labels:
+          role: canary
       trafficRouting:
         istio:
           virtualService:
