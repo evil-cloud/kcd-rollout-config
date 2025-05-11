@@ -26,14 +26,12 @@ spec:
         labels:
           role: canary
           version: canary
-          app.kubernetes.io/version: canary
       stableMetadata:
         annotations:
           role: stable
         labels:
           role: stable
           version: stable
-          app.kubernetes.io/version: stable
       trafficRouting:
         istio:
           virtualService:
