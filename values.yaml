@@ -155,17 +155,17 @@ istio:
         name: http
         protocol: HTTP
       hosts:
-      - "devops3.infraops.us"
+      - "devops.infraops.us"
     labels: {}
     annotations:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      external-dns.alpha.kubernetes.io/hostname: "devops3.infraops.us"
+      external-dns.alpha.kubernetes.io/hostname: "devops.infraops.us"
       external-dns.alpha.kubernetes.io/target: c903dcc9-5c64-4d5c-88e1-ee8632ef4ac0.cfargotunnel.com
       kubernetes.io/ingress.class: "istio"
   virtualService:
     enabled: true
     hosts:
-    - "devops3.infraops.us"
+    - "devops.infraops.us"
     http:
     - name: primary
       match:
@@ -182,7 +182,7 @@ istio:
             number: 80
       retries:
         attempts: 3
-        perTryTimeout: 2s
+        perTryTimeout: 5s
         retryOn: "gateway-error,connect-failure,refused-stream"
       timeout: 5s
       fault:
@@ -192,7 +192,7 @@ istio:
           fixedDelay: 5s
       corsPolicy:
         allowOrigins:
-        - exact: "https://devops3.infraops.us"
+        - exact: "https://devops.infraops.us"
         allowMethods:
         - GET
         allowHeaders:
