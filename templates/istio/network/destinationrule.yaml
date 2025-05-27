@@ -10,7 +10,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  host: {{ include "generic-rollout.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  # host: {{ include "generic-rollout.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  host: {{ include "generic-rollout.fullname" . }}
   trafficPolicy:
     {{- with .Values.istio.destinationRule.trafficPolicy }}
     {{- toYaml . | nindent 4 }}

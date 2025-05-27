@@ -22,7 +22,8 @@ spec:
       route:
         {{- range .route }}
         - destination:
-            host: {{ include "generic-rollout.fullname" $ }}.{{ $.Release.Namespace }}.svc.cluster.local
+            # host: {{ include "generic-rollout.fullname" $ }}.{{ $.Release.Namespace }}.svc.cluster.local
+            host: {{ include "generic-rollout.fullname" $ }}
             subset: {{ .destination.subset }}
             port:
               number: {{ .destination.port.number }}
