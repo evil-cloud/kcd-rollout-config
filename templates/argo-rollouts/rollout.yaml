@@ -20,6 +20,7 @@ spec:
 
   strategy:
     canary:
+      scaleDownDelayRevisionLimit: 2
       canaryMetadata:
         annotations:
           role: canary
