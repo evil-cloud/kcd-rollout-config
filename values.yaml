@@ -265,41 +265,25 @@ rollout:
       address: "http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
   spec:
     steps:
+    - setWeight: 1
     - analysis:
         templates:
         - templateName: check-jsonplaceholder-api-rate
-    - setWeight: 10
-    - pause:
-        duration: 40s
     - analysis:
         templates:
         - templateName: general-success-rate
-        - templateName: external-api-success-rate
-        args:
-        - name: rollout-pod-hash
-          valueFrom:
-            podTemplateHashValue: Latest
-    - setWeight: 25
-    - pause:
-        duration: 40s
-    - analysis:
-        templates:
-        - templateName: general-success-rate
-        - templateName: external-api-success-rate
-        - templateName: external-api-latency-p95
         args:
         - name: rollout-pod-hash
           valueFrom:
             podTemplateHashValue: Latest
     - setWeight: 50
     - pause:
-        duration: 40s
+        duration: 50s
     - analysis:
         templates:
         - templateName: general-success-rate
         - templateName: external-api-success-rate
         - templateName: external-api-latency-p95
-        - templateName: circuit-breaker-state
         args:
         - name: rollout-pod-hash
           valueFrom:
