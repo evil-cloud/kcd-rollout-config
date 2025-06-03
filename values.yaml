@@ -14,7 +14,7 @@ serviceAccount:
 image:
   repository: d4rkghost47/gitops-api
   pullPolicy: IfNotPresent
-  tag: "3902ce18"
+  tag: "6d71c90b"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
@@ -269,7 +269,6 @@ rollout:
     - analysis:
         templates:
         - templateName: check-jsonplaceholder-api-rate
-
     - setWeight: 50
     - pause:
         duration: 10s
