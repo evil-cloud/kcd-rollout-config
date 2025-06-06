@@ -20,19 +20,7 @@ spec:
 
   strategy:
     canary:
-      canaryMetadata:
-        annotations:
-          role: canary
-        labels:
-          role: canary
-          version: {{ .Values.image.tag }}
 
-      stableMetadata:
-        annotations:
-          role: stable
-        labels:
-          role: stable
-          version: {{ .Values.image.tag }}
           
       scaleDownDelayRevisionLimit: 2
       trafficRouting:
