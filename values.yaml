@@ -2,7 +2,7 @@
 nameOverride: "devops-api"
 fullnameOverride: "devops-api"
 autoscaling:
-  minReplicas: 3
+  minReplicas: 5
   maxReplicas: 20
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
