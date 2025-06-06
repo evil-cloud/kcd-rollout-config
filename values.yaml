@@ -91,7 +91,7 @@ readinessProbe:
     scheme: HTTP
   initialDelaySeconds: 5
   periodSeconds: 15
-  timeoutSeconds: 10
+  timeoutSeconds: 3
   successThreshold: 1
   failureThreshold: 3
 startupProbe:
@@ -180,6 +180,26 @@ istio:
           subset: canary
           port:
             number: 80
+      retries:
+        attempts: 3
+        perTryTimeout: 15s
+        retryOn: "gateway-error,connect-failure,refused-stream"
+      timeout: 15s
+      corsPolicy:
+        allowOrigins:
+        - exact: "https://api.infraops.us"
+        allowMethods:
+        - GET
+        allowHeaders:
+        - authorization
+        - content-type
+        maxAge: "24h"
+      headers:
+        response:
+          set:
+            strict-transport-security: "max-age=31536000; includeSubDomains"
+            x-content-type-options: "nosniff"
+            x-frame-options: "DENY"
   destinationRule:
     enabled: true
     trafficPolicy:
