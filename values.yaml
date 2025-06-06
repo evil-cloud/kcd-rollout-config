@@ -182,9 +182,9 @@ istio:
             number: 80
       retries:
         attempts: 3
-        perTryTimeout: 5s
+        perTryTimeout: 15s
         retryOn: "gateway-error,connect-failure,refused-stream"
-      timeout: 5s
+      timeout: 15s
       corsPolicy:
         allowOrigins:
         - exact: "https://api.infraops.us"
@@ -207,7 +207,7 @@ istio:
         simple: ROUND_ROBIN
       connectionPool:
         http:
-          maxRequestsPerConnection: 10
+          maxRequestsPerConnection: 20
           http2MaxRequests: 1000
           maxRetries: 3
       tls:
