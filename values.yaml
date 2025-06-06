@@ -194,12 +194,6 @@ istio:
         - authorization
         - content-type
         maxAge: "24h"
-      headers:
-        response:
-          set:
-            strict-transport-security: "max-age=31536000; includeSubDomains"
-            x-content-type-options: "nosniff"
-            x-frame-options: "DENY"
   destinationRule:
     enabled: true
     trafficPolicy:
