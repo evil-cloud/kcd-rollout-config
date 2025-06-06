@@ -180,20 +180,6 @@ istio:
           subset: canary
           port:
             number: 80
-      retries:
-        attempts: 3
-        perTryTimeout: 15s
-        retryOn: "gateway-error,connect-failure,refused-stream"
-      timeout: 15s
-      corsPolicy:
-        allowOrigins:
-        - exact: "https://api.infraops.us"
-        allowMethods:
-        - GET
-        allowHeaders:
-        - authorization
-        - content-type
-        maxAge: "24h"
   destinationRule:
     enabled: true
     trafficPolicy:
