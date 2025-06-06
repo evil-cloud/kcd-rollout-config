@@ -14,7 +14,7 @@ serviceAccount:
 image:
   repository: d4rkghost47/gitops-api
   pullPolicy: IfNotPresent
-  tag: "9e41f260"
+  tag: "b3e2992b"
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
