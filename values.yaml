@@ -3,7 +3,7 @@ nameOverride: "devops-api"
 fullnameOverride: "devops-api"
 autoscaling:
   minReplicas: 5
-  maxReplicas: 20
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 serviceAccount:
@@ -185,11 +185,6 @@ istio:
         perTryTimeout: 5s
         retryOn: "gateway-error,connect-failure,refused-stream"
       timeout: 5s
-      fault:
-        delay:
-          percentage:
-            value: 0.1
-          fixedDelay: 5s
       corsPolicy:
         allowOrigins:
         - exact: "https://api.infraops.us"
