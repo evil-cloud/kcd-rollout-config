@@ -294,8 +294,6 @@ rollout:
     - analysis:
         templates:
         - templateName: general-success-rate
-        - templateName: external-api-success-rate
-        - templateName: external-api-latency-p95
         - templateName: circuit-breaker-state
         args:
         - name: rollout-pod-hash
