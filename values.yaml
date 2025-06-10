@@ -263,6 +263,7 @@ rollout:
     - analysis:
         templates:
         - templateName: check-jsonplaceholder-api-rate
+
     - setWeight: 25
     - pause:
         duration: 20s
@@ -273,22 +274,12 @@ rollout:
         - name: rollout-pod-hash
           valueFrom:
             podTemplateHashValue: Latest
+
     - setWeight: 50
     - pause:
         duration: 20s
     - analysis:
         templates:
-        - templateName: general-success-rate
-        args:
-        - name: rollout-pod-hash
-          valueFrom:
-            podTemplateHashValue: Latest
-    - pause:
-        duration: 20s
-    - setWeight: 75
-    - analysis:
-        templates:
-        - templateName: general-success-rate
         - templateName: external-api-success-rate
         - templateName: external-api-latency-p95
         - templateName: circuit-breaker-state
@@ -296,4 +287,5 @@ rollout:
         - name: rollout-pod-hash
           valueFrom:
             podTemplateHashValue: Latest
+
     - setWeight: 100
