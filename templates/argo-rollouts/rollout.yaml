@@ -7,7 +7,7 @@ metadata:
     app: {{ include "generic-rollout.fullname" . }}
 spec:
   replicas: {{ .Values.autoscaling.minReplicas }}
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 1
 
   selector:
     matchLabels:
