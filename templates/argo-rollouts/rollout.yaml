@@ -21,6 +21,19 @@ spec:
   strategy:
     canary:
       scaleDownDelayRevisionLimit: 2
+      
+      canaryMetadata:
+        annotations:
+          role: canary
+        labels:
+          version: {{ .Values.image.tag }}
+
+      stableMetadata:
+        annotations:
+          role: stable
+        labels:
+          version: {{ .Values.image.tag }}
+
       trafficRouting:
         istio:
           virtualService:
