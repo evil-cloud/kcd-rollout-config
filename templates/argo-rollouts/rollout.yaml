@@ -25,12 +25,14 @@ spec:
       canaryMetadata:
         annotations:
           role: canary
+          version: {{ .Values.image.tag | quote }}
         labels:
           version: {{ .Values.image.tag | quote }}
 
       stableMetadata:
         annotations:
           role: stable
+          version: {{ .Values.image.tag | quote }}
         labels:
           version: {{ .Values.image.tag | quote }}
 
