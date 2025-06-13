@@ -21,18 +21,18 @@ spec:
   strategy:
     canary:
       scaleDownDelayRevisionLimit: 2
-      
+
       canaryMetadata:
         annotations:
           role: canary
         labels:
-          version: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag | quote }}
 
       stableMetadata:
         annotations:
           role: stable
         labels:
-          version: {{ .Values.image.tag }}
+          version: {{ .Values.image.tag | quote }}
 
       trafficRouting:
         istio:
