@@ -26,14 +26,14 @@ spec:
         annotations:
           role: canary
         labels:
-          version: canary/{{ .Values.image.tag | toString }}
+          version: {{ .Values.image.tag | quote }}
           release: "canary"
 
       stableMetadata:
         annotations:
           role: stable
         labels:
-          version: stable/{{ .Values.image.tag | toString }}
+          version: {{ .Values.image.tag | quote }}
           release: "stable"
 
       trafficRouting:
