@@ -5,7 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ include "generic-rollout.fullname" . }}
-    service.istio.io/canonical-revision: latest
 spec:
   replicas: {{ .Values.autoscaling.minReplicas }}
   revisionHistoryLimit: 1
@@ -27,12 +26,14 @@ spec:
         annotations:
           role: canary
         labels:
+          version: canary/{{ .Values.image.tag | quote }}
           release: "canary"
 
       stableMetadata:
         annotations:
           role: stable
         labels:
+          version: stable/{{ .Values.image.tag | quote }}
           release: "stable"
 
       trafficRouting:
