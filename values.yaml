@@ -12,9 +12,9 @@ serviceAccount:
   annotations:
     kubernetes.io/automount-service-account-token: "false"
 image:
-  repository: d4rkghost47/gitops-api
+  repository: d4rkghost47/gitops-api-sec
   pullPolicy: IfNotPresent
-  tag: "ca31cb1a"
+  tag: ""
 imagePullSecrets: []
 podAnnotations:
   prometheus.io/scrape: "true"
